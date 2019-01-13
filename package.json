@@ -4,7 +4,7 @@
   "description": "translation platform",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon devServer.js",
+    "start": "nodemon ./devServer.js",
     "js:watch": "npx webpack --watch",
     "dist": "npm run clean && npx webpack --config webpack.config.prod.js",
     "css:watch": "npx postcss --watch ./client/css/main.css -o ./dist/main.css",
