@@ -1,0 +1,11 @@
+node_modules/
+.classpath
+.project
+bin/
+.gradle/
+.settings/
+build/
+dist/
+out/
+.idea
+src/main/resources/public/

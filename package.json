@@ -1,0 +1,41 @@
+{
+  "name": "localizer",
+  "version": "1.0.0",
+  "description": "translation platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon devServer.js",
+    "js:watch": "npx webpack --watch",
+    "dist": "npm run clean && npx webpack --config webpack.config.prod.js",
+    "css:watch": "npx postcss --watch ./client/css/main.css -o ./dist/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./src/main/resources/public/*"
+  },
+  "author": "Fredrik Christenson",
+  "license": "ISC",
+  "dependencies": {
+    "react": "16.7.0",
+    "react-dom": "16.7.0",
+    "react-router": "4.3.1",
+    "react-router-dom": "4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "10.12.18",
+    "@types/react": "16.7.18",
+    "@types/react-dom": "16.0.11",
+    "css-loader": "2.1.0",
+    "express": "4.16.4",
+    "express-http-proxy": "1.5.0",
+    "html-webpack-plugin": "3.2.0",
+    "mini-css-extract-plugin": "0.5.0",
+    "nodemon": "1.18.9",
+    "postcss": "7.0.11",
+    "postcss-cli": "6.1.1",
+    "postcss-import": "12.0.1",
+    "postcss-loader": "3.0.0",
+    "ts-loader": "5.3.3",
+    "typescript": "3.2.2",
+    "webpack": "4.28.4",
+    "webpack-cli": "3.2.1"
+  }
+}
