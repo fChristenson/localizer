@@ -4,7 +4,28 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-light-gray: #EEEEEE;
+    --color-gray: #9D9D9D;
+    --color-dark-gray: #777777;
+    --color-blue: steelblue;
+    --color-dark-blue: #457DD7;
+    --color-xdark-blue: #286090;
+    --color-orange: #F0AD4E;
+    --color-dark-orange: #EC971E;
+
+    --margin-md: 12px;
+    --margin-sm: 8px;
+    --margin-xsm: 4px;
+
+    --font-size-md: 16px;
+
+    --font-weight-thin: 100;
+
+    --icon-width: 12px;
+}
+
 body {
-    background: rebeccapurple;
-    color: white;
+    font-family: Roboto, sans-serif;
+    background: white;
 }

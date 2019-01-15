@@ -1,1 +1,6 @@
 @import "./global.css";
+@import "../js/app/app.css";
+@import "../js/components/header/header.css";
+@import "../js/components/projectBar/projectBar.css";
+@import "../js/components/translationsBar/translationsBar.css";
+@import "../js/components/badgeButton/badgeButton.css";

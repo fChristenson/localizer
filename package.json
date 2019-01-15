@@ -6,10 +6,12 @@
   "scripts": {
     "start": "nodemon ./devServer.js",
     "js:watch": "npx webpack --watch",
-    "dist": "npm run clean && npx webpack --config webpack.config.prod.js",
+    "dist": "npx webpack --config webpack.config.prod.js",
+    "predist": "npm run clean && npm run copy:images",
     "css:watch": "npx postcss --watch ./client/css/main.css -o ./dist/main.css",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf ./src/main/resources/public/*"
+    "clean": "rm -rf ./src/main/resources/public/*",
+    "copy:images": "cp -r ./client/images ./src/main/resources/public"
   },
   "author": "Fredrik Christenson",
   "license": "ISC",
@@ -34,6 +36,7 @@
     "postcss-import": "12.0.1",
     "postcss-loader": "3.0.0",
     "ts-loader": "5.3.3",
+    "tslint": "5.12.1",
     "typescript": "3.2.2",
     "webpack": "4.28.4",
     "webpack-cli": "3.2.1"

@@ -1,13 +1,14 @@
 import * as React from "react";
+import { Header } from "../components/header/Header";
+import { ProjectBar } from "../components/projectBar/ProjectBar";
+import { TranslationsBar } from "../components/translationsBar/TranslationsBar";
 
-export default class App extends React.Component {
-    async componentDidMount() {
-        const res = await fetch("/api/v1/translations", { headers: { "Content-type": "application/json" } });
-        const text = await res.text();
-        alert(text);
-    }
-
-    render() {
-        return <h1>hello world</h1>;
-    }
+export function App() {
+    return (
+        <div className="app">
+            <Header username="default" />
+            <ProjectBar projectName="Bookstore" />
+            <TranslationsBar />
+        </div>
+    );
 }

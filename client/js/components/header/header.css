@@ -1,0 +1,10 @@
+.header__ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header__username {
+  color: var(--color-gray);
+  padding: calc(var(--margin-md) * 2) var(--margin-md);
+}

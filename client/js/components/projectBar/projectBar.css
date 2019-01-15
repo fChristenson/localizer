@@ -1,0 +1,29 @@
+.project-bar {
+  padding: var(--margin-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-bar__languages {
+  list-style: none;
+  display: flex;
+}
+
+.project-bar__searchfield {
+  font-size: var(--font-size-md);
+  padding: var(--margin-md);
+  border-radius: 25px;
+  outline: none;
+  border: 1px solid var(--color-gray);
+  min-width: 280px;
+}
+
+.project-bar__searchfield:focus {
+  border: 1px solid var(--color-blue);
+  box-shadow: 0px 0px 8px var(--color-blue);
+}
+
+.project-bar__langauge {
+  padding-left: var(--margin-xsm);
+}

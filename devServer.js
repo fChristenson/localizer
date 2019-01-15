@@ -4,6 +4,7 @@ const proxy = require("express-http-proxy");
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, "dist")));
+app.use("/images", express.static(path.resolve(__dirname, "client", "images")));
 
 app.use(proxy("localhost:8080"));
 
