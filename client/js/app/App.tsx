@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Header } from "../components/header/Header";
 import { ProjectBar } from "../components/projectBar/ProjectBar";
+import { TranslationList } from "../components/translationList/TranslationList";
 import { TranslationsBar } from "../components/translationsBar/TranslationsBar";
 
 export function App() {
@@ -9,6 +10,7 @@ export function App() {
             <Header username="default" />
             <ProjectBar projectName="Bookstore" />
             <TranslationsBar />
+            <TranslationList />
         </div>
     );
 }
