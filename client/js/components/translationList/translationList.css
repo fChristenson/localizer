@@ -3,6 +3,7 @@
   border-top: 2px var(--color-gray) solid;
   border-bottom: 2px var(--color-gray) solid;
   margin-bottom: var(--margin-xl);
+  margin: 0 var(--margin-md) var(--margin-md);
 }
 
 .translation-row {
@@ -93,6 +94,7 @@
 }
 
 .translation-value__language {
+  text-transform: capitalize;
   white-space: nowrap;
   background: var(--color-light-gray);
   letter-spacing: 1px;

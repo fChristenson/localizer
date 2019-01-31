@@ -4,7 +4,7 @@
   outline: none;
   align-items: center;
   cursor: pointer;
-  justify-content: space-between;
+  justify-content: center;
   min-width: 80px;
   padding: var(--margin-sm) var(--margin-md);
   border: none;

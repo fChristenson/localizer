@@ -4,12 +4,12 @@ import { TagFilteringDropdown } from "./TagFilteringDropdown";
 import { TagName } from "./TagName";
 
 interface ITagFilteringBoxState {
-  selectedTag: string;
+  selectedTag: string | null;
   showDropdown: boolean;
 }
 
-export class TagFilteringBox extends React.Component<any, ITagFilteringBoxState> {
-  constructor(props: any) {
+export class TagFilteringBox extends React.Component<object, ITagFilteringBoxState> {
+  constructor(props: object) {
     super(props);
     this.state = { selectedTag: "", showDropdown: false };
     this.showDropdown = this.showDropdown.bind(this);
@@ -49,7 +49,7 @@ export class TagFilteringBox extends React.Component<any, ITagFilteringBoxState>
     this.setState({ showDropdown: false });
   }
 
-  private selectTag(selectedTag: string) {
+  private selectTag(selectedTag: string | null) {
     this.setState({ selectedTag });
   }
 }

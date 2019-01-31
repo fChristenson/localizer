@@ -1,12 +1,12 @@
 import * as React from "react";
 
 interface ITagFilteringDropdownProps {
-  onTagSelect: (selectedTag: string) => void;
+  onTagSelect: (selectedTag: string | null) => void;
   onClose: () => void;
 }
 
 export class TagFilteringDropdown extends React.Component<ITagFilteringDropdownProps> {
-  constructor(props: any) {
+  constructor(props: ITagFilteringDropdownProps) {
     super(props);
     this.onSelect = this.onSelect.bind(this);
   }
@@ -30,7 +30,7 @@ export class TagFilteringDropdown extends React.Component<ITagFilteringDropdownP
     );
   }
 
-  private onSelect(event: any) {
-    this.props.onTagSelect(event.target.textContent);
+  private onSelect(event: React.MouseEvent<HTMLElement>) {
+    this.props.onTagSelect((event.target as HTMLElement).textContent);
   }
 }

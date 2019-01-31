@@ -1,4 +1,5 @@
 import * as React from "react";
+import { TranslationDescription, TranslationKey, TranslationTag } from "../../lib/models/Translation";
 
 function getRandomBrightColor() {
   const random1 = Math.floor(Math.random() * 360);
@@ -8,18 +9,27 @@ function getRandomBrightColor() {
   return `hsl(${random1},${random2}%,${random3}%)`;
 }
 
-export class TranslationMetaBar extends React.PureComponent {
+interface ITranslationMetaBarProps {
+  translationKey: TranslationKey;
+  tags: TranslationTag[];
+  description: TranslationDescription;
+}
+
+export class TranslationMetaBar extends React.PureComponent<ITranslationMetaBarProps> {
   public render() {
     return (
       <div className="meta-bar">
-        <button className="meta-bar__key">key.for.translation</button>
+        <button className="meta-bar__key">{this.props.translationKey}</button>
         <ul className="meta-bar__tags">
-          <li style={{ background: getRandomBrightColor() }} className="meta-bar__tag">tag foobar</li>
-          <li style={{ background: getRandomBrightColor() }} className="meta-bar__tag">tag foobar</li>
-          <li style={{ background: getRandomBrightColor() }} className="meta-bar__tag">tag foobar</li>
-          <li style={{ background: getRandomBrightColor() }} className="meta-bar__tag">tag foobar</li>
+          {
+            this.props.tags
+              .map((tag, index) => <li
+                key={index}
+                style={{ background: getRandomBrightColor() }}
+                className="meta-bar__tag">{tag}</li>)
+          }
         </ul>
-        <div className="meta-bar__description">The title of my bookstore app</div>
+        <div className="meta-bar__description">{this.props.description}</div>
         <ul className="meta-bar__action-list">
           <li>
             <button className="meta-bar__trash-btn">

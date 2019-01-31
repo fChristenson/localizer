@@ -1,7 +1,9 @@
 import * as React from "react";
+import { Language } from "../../lib/models/TranslationText";
 
 interface ITranslationValueRow {
   value?: string;
+  language: Language;
 }
 
 export class TranslationValueRow extends React.PureComponent<ITranslationValueRow> {
@@ -9,7 +11,7 @@ export class TranslationValueRow extends React.PureComponent<ITranslationValueRo
     const btnClassName = this.props.value ? "translation-value__btn" : "translation-value__btn--empty";
     return (
       <li className="translation-value__row">
-        <div className="translation-value__language">English</div>
+        <div className="translation-value__language">{this.props.language}</div>
         <div className="translation-value__value">
           <button className={btnClassName}>{this.props.value || "Empty"}</button>
           <ul className="translation-value__actions">
