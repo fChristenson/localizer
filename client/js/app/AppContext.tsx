@@ -5,8 +5,10 @@ export interface IAppContext {
   onCloseKeyEditor: () => void;
   onOpenKeyEditor: () => void;
   setTranslations: (translations: Translation[]) => void;
+  onSearch: (value: string) => void;
   showKeyEditor: boolean;
   translations: Translation[];
+  filter: string;
 }
 
 const context = React.createContext({});
@@ -18,6 +20,7 @@ export interface IContextProps {
 interface IAppState {
   showKeyEditor: boolean;
   translations: Translation[];
+  filter: string;
 }
 
 interface IAppContextProviderProps {
@@ -27,16 +30,19 @@ interface IAppContextProviderProps {
 export class AppContextProvider extends React.Component<IAppContextProviderProps, IAppState> {
   constructor(props: IAppContextProviderProps) {
     super(props);
-    this.state = { showKeyEditor: false, translations: [] };
+    this.state = { showKeyEditor: false, translations: [], filter: "" };
+    this.onSearch = this.onSearch.bind(this);
     this.onCloseKeyEditor = this.onCloseKeyEditor.bind(this);
     this.onOpenKeyEditor = this.onOpenKeyEditor.bind(this);
     this.setTranslations = this.setTranslations.bind(this);
   }
 
   public render() {
-    const contextValue = {
+    const contextValue: IAppContext = {
+      filter: this.state.filter,
       onCloseKeyEditor: this.onCloseKeyEditor,
       onOpenKeyEditor: this.onOpenKeyEditor,
+      onSearch: this.onSearch,
       setTranslations: this.setTranslations,
       showKeyEditor: this.state.showKeyEditor,
       translations: this.state.translations,
@@ -46,6 +52,10 @@ export class AppContextProvider extends React.Component<IAppContextProviderProps
         {this.props.children}
       </context.Provider>
     );
+  }
+
+  private onSearch(value: string) {
+    this.setState({ filter: value });
   }
 
   private onOpenKeyEditor() {
