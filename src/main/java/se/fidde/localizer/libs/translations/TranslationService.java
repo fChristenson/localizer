@@ -11,6 +11,10 @@ public class TranslationService {
 	@Autowired
 	private TranslationRepository repo;
 
+	public void deleteTranslation(Long translationId) {
+		repo.deleteById(translationId);
+	}
+
 	public List<Translation> getAllTranslations() {
 		return repo.findAll();
 	}

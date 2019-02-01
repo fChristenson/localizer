@@ -1,4 +1,4 @@
-import { Translation } from "../models/Translation";
+import { Translation, TranslationId } from "../models/Translation";
 import { validateValueType } from "./ApiUtils";
 import { HttpMethod, Request } from "./Request";
 
@@ -23,4 +23,9 @@ export async function getAllTranslations(): Promise<Translation[]> {
   const json = await response.json();
   const maybeTranslations = validateValueType(json, [], "translations");
   return maybeTranslations.map((val) => new Translation(val));
+}
+
+export async function deleteTranslation(translationId: TranslationId): Promise<void> {
+  await fetch(`/api/v1/translations/${translationId}`, Request(HttpMethod.DELETE));
+  return;
 }
