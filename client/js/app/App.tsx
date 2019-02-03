@@ -20,7 +20,7 @@ class AppComponent extends React.Component<IContextProps> {
                 <ProjectBar projectName="Bookstore" />
                 <TranslationsBar numberOfKeys={this.props.context.translations.length} />
                 <TranslationList />
-                <KeyEditor show={this.props.context.showKeyEditor} />
+                <KeyEditor />
             </div>
         );
     }

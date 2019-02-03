@@ -44,6 +44,7 @@
   flex-wrap: wrap;
   list-style: none;
   align-items: center;
+  margin-left: calc(var(--margin-xsm) * -1);
 }
 
 .meta-bar__trash-img {

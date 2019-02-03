@@ -32,4 +32,8 @@ public class TranslatedText {
 	public Language getLanguage() {
 		return language;
 	}
+
+	public void setText(String text) {
+		this.text = TranslationUtils.notNull("translated text", text);
+	}
 }

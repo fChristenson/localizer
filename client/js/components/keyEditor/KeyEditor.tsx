@@ -1,22 +1,47 @@
 import * as React from "react";
 import { IContextProps, withAppContext } from "../../app/AppContext";
-import { getAllTranslations, saveTranslation } from "../../lib/api/translationApi";
+import { getAllTranslations, saveTranslation, updateTranslation } from "../../lib/api/translationApi";
+import { Language } from "../../lib/models/TranslationText";
 import { BadgeButton } from "../badgeButton/BadgeButton";
+import { IKeyEditorForm } from "./IKeyEditorForm";
 import { KeyEditorFormFields } from "./KeyEditorFormFields";
 
-interface IKeyEditorProps extends IContextProps {
-  show: boolean;
+interface IKeyEditorComponentState {
+  form: IKeyEditorForm;
 }
 
-export class KeyEditorComponent extends React.Component<IKeyEditorProps> {
-  constructor(props: IKeyEditorProps) {
+const initForm = { key: "", translation: "", description: "", tags: [] };
+export class KeyEditorComponent extends React.Component<IContextProps, IKeyEditorComponentState> {
+  constructor(props: IContextProps) {
     super(props);
+    const state = { form: initForm };
+    this.state = state;
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onClose = this.onClose.bind(this);
   }
 
+  public componentWillReceiveProps(props: IContextProps) {
+    if (props.context.translationToEdit) {
+      const translation = props.context.translationToEdit.translations.find((t) => t.language === Language.ENGLISH);
+      if (translation) {
+        const state = {
+          form: {
+            description: props.context.translationToEdit.description,
+            key: props.context.translationToEdit.translationKey,
+            tags: props.context.translationToEdit.tags,
+            translation: translation.text,
+          },
+        };
+        this.setState(state);
+      }
+    } else {
+      this.setState({ form: initForm });
+    }
+  }
+
   public render() {
-    if (this.props.show === false) {
+    if (this.props.context.showKeyEditor === false) {
       return null;
     }
 
@@ -29,7 +54,7 @@ export class KeyEditorComponent extends React.Component<IKeyEditorProps> {
             <button onClick={this.onClose} className="key-editor__close" tabIndex={1}>×</button>
           </header>
           <div className="key-editor__content">
-            <KeyEditorFormFields />
+            <KeyEditorFormFields form={this.state.form} onChange={this.onChange} />
           </div>
           <footer className="key-editor__footer">
             <BadgeButton tabIndex={6}>Save</BadgeButton>
@@ -37,6 +62,12 @@ export class KeyEditorComponent extends React.Component<IKeyEditorProps> {
         </form>
       </div>
     );
+  }
+
+  private onChange(key: keyof IKeyEditorForm, value: string | string[]) {
+    const state = { ...this.state };
+    state.form[key] = value;
+    this.setState(state);
   }
 
   private onClose(event: React.MouseEvent<HTMLElement>): boolean {
@@ -49,13 +80,25 @@ export class KeyEditorComponent extends React.Component<IKeyEditorProps> {
   private async onSubmit(event: React.FormEvent<HTMLFormElement>): Promise<boolean> {
     event.preventDefault();
     event.stopPropagation();
-    const el = event.target as HTMLFormElement;
-    const key = el.key.value;
-    const translation = el.translation.value;
-    const description = el.description.value;
-    const tags = el["tag-values"].value.split(",").filter((val: string) => val);
+    const {
+      key,
+      translation,
+      description,
+      tags,
+    } = this.state.form;
 
-    await saveTranslation(key, translation, description, tags);
+    if (this.props.context.translationToEdit) {
+      const id = this.props.context.translationToEdit.id;
+      const translationText = this.props.context.translationToEdit
+        .translations.find((t) => t.language === Language.ENGLISH);
+      if (!translationText) {
+        throw new Error("Couldn't find a translation text in English");
+      }
+      translationText.text = translation;
+      await updateTranslation(id, key, translationText, description, tags);
+    } else {
+      await saveTranslation(key, translation, description, tags);
+    }
     const translations = await getAllTranslations();
     this.props.context.setTranslations(translations);
     this.props.context.onCloseKeyEditor();

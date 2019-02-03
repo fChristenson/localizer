@@ -22,12 +22,13 @@ class TranslationMetaBarComponent extends React.Component<ITranslationMetaBarPro
   constructor(props: ITranslationMetaBarProps) {
     super(props);
     this.removeTranslation = this.removeTranslation.bind(this);
+    this.onEdit = this.onEdit.bind(this);
   }
 
   public render() {
     return (
       <div className="meta-bar">
-        <button className="meta-bar__key">{this.props.translationKey}</button>
+        <button onClick={this.onEdit} className="meta-bar__key">{this.props.translationKey}</button>
         <ul className="meta-bar__tags">
           {
             this.props.tags
@@ -47,6 +48,10 @@ class TranslationMetaBarComponent extends React.Component<ITranslationMetaBarPro
         </ul>
       </div>
     );
+  }
+
+  private onEdit() {
+    this.props.context.onEditTranslation(this.props.translationId);
   }
 
   private async removeTranslation() {

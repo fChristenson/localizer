@@ -1,9 +1,11 @@
 import * as React from "react";
+import { IKeyEditorForm } from "./IKeyEditorForm";
 import { TagFieldList } from "./TagFieldList";
 import { TagLabel } from "./TagLabel";
 
 interface ITagFieldProps {
   tags: string[];
+  onChange(key: keyof IKeyEditorForm, value: string | string[]): void;
 }
 
 interface ITagState {
@@ -64,7 +66,9 @@ export class TagField extends React.Component<ITagFieldProps, ITagState> {
 
     if (hasBreak) {
       const tag = text.replace(/[\s,]/, "");
-      this.setState({ tags: this.state.tags.concat(tag), value: "" });
+      const tags = this.state.tags.concat(tag);
+      this.setState({ tags, value: "" });
+      this.props.onChange("tags", tags);
       el.focus();
     }
   }
@@ -79,5 +83,6 @@ export class TagField extends React.Component<ITagFieldProps, ITagState> {
     const tags = this.state.tags.filter((stateTag) => stateTag !== tag);
     const showTagsLabel = tags.length <= 0;
     this.setState({ showTagsLabel, tags });
+    this.props.onChange("tags", tags);
   }
 }

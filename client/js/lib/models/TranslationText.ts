@@ -1,9 +1,9 @@
 import { validateValueType } from "../api/ApiUtils";
 
 export enum Language {
-  UNKNOWN = "Unknown",
-  ENGLISH = "English",
-  SWEDISH = "Swedish",
+  UNKNOWN = "UNKNOWN",
+  ENGLISH = "ENGLISH",
+  SWEDISH = "SWEDISH",
 }
 
 export type TranslationTextId = number;

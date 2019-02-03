@@ -2,6 +2,7 @@ package se.fidde.localizer.libs.translations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -32,17 +33,10 @@ public class Translation {
 
 	public Translation(IncomingTranslation incoming) throws IllegalArgumentException {
 		this.id = -1L;
-		this.translationKey = TranslationUtils.validateString("key", incoming.getKey());
-		List<TranslatedText> translations = new ArrayList<TranslatedText>();
-		translations.add(new TranslatedText(incoming.getTranslation(), Language.ENGLISH));
-		translations.add(new TranslatedText("", Language.SWEDISH));
-		this.translations = translations;
-		this.description = TranslationUtils.validateString("description", incoming.getDescription());
-		List<TranslationTag> tags = new ArrayList<TranslationTag>();
-		for (String tag : incoming.getTags()) {
-			tags.add(new TranslationTag(tag));
-		}
-		this.tags = tags;
+		this.setTranslationKey(incoming.getKey());
+		this.createTranslations(incoming.getTranslation());
+		this.setDescription(incoming.getDescription());
+		this.createTags(incoming.getTags());
 	}
 
 	public Long getId() {
@@ -63,6 +57,56 @@ public class Translation {
 
 	public String getTranslationKey() {
 		return translationKey;
+	}
+
+	public void setTranslationKey(String translationKey) {
+		TranslationUtils.validateString("key", translationKey);
+		this.translationKey = translationKey;
+	}
+
+	public void setTranslations(List<TranslatedText> translations) {
+		this.translations = translations;
+	}
+
+	public void setDescription(String description) {
+		this.description = TranslationUtils.validateString("description", description);
+	}
+
+	public void setTags(List<TranslationTag> tags) {
+		this.tags = tags;
+	}
+
+	public void updateTags(List<String> tags) {
+		this.tags.clear();
+		for (String tag : tags) {
+			this.tags.add(new TranslationTag(tag));
+		}
+	}
+
+	public void updateTranslation(TranslatedText text) {
+		Optional<TranslatedText> maybeText = this.translations.stream().filter((t) -> t.getId() == text.getId())
+				.findFirst();
+		if (maybeText.isPresent() == false) {
+			throw new IllegalArgumentException(String.format("%s could not be found", text.getId()));
+		}
+		maybeText.get().setText(text.getText());
+	}
+
+	private void createTranslations(String translation) {
+		List<TranslatedText> translations = new ArrayList<TranslatedText>();
+		TranslationUtils.validateString("translation", translation);
+		translations.add(new TranslatedText(translation, Language.ENGLISH));
+		translations.add(new TranslatedText("", Language.SWEDISH));
+		this.translations = translations;
+	}
+
+	private void createTags(List<String> stringTags) {
+		List<TranslationTag> tags = new ArrayList<TranslationTag>();
+		for (String tag : stringTags) {
+			tags.add(new TranslationTag(tag));
+		}
+		this.tags = tags;
+
 	}
 
 	@JsonProperty(value = "tags")
