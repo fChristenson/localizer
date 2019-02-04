@@ -1,8 +1,10 @@
 import * as React from "react";
+import { TranslationId } from "../../lib/models/Translation";
 import { Language, TranslationText } from "../../lib/models/TranslationText";
 import { TranslationValueRow } from "./TranslationValueRow";
 
 interface ITranslationValueListProps {
+  translationId: TranslationId;
   translationTexts: TranslationText[];
 }
 
@@ -24,7 +26,11 @@ export class TranslationValueList extends React.PureComponent<ITranslationValueL
           {
             this.props.translationTexts
               .sort(sort)
-              .map((text) => <TranslationValueRow key={text.id} value={text.text} language={text.language} />)
+              .map((text) => <TranslationValueRow
+                key={text.id}
+                translationId={this.props.translationId}
+                translationText={text}
+                language={text.language} />)
           }
         </ul>
       </div>

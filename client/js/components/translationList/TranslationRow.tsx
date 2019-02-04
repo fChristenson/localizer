@@ -15,7 +15,9 @@ export class TranslationRow extends React.PureComponent<ITranslationRowProps> {
           tags={this.props.translation.tags}
           translationKey={this.props.translation.translationKey}
           description={this.props.translation.description} />
-        <TranslationValueList translationTexts={this.props.translation.translations} />
+        <TranslationValueList
+          translationId={this.props.translation.id}
+          translationTexts={this.props.translation.translations} />
       </li>
     );
   }

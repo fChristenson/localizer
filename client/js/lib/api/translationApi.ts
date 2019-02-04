@@ -1,5 +1,5 @@
 import { Translation, TranslationId } from "../models/Translation";
-import { TranslationText } from "../models/TranslationText";
+import { TranslationText, TranslationTextId } from "../models/TranslationText";
 import { validateValueType } from "./ApiUtils";
 import { HttpMethod, Request } from "./Request";
 
@@ -15,6 +15,17 @@ export async function saveTranslation(
     translation,
   };
   const response = await fetch("/api/v1/translations", Request(HttpMethod.POST, body));
+  const json = await response.json();
+  return new Translation(json);
+}
+
+export async function updateTranslationText(
+  translationId: TranslationId,
+  translationText: TranslationText): Promise<Translation> {
+  const body = { text: translationText };
+  const response = await fetch(
+    `/api/v1/translations/${translationId}/text`,
+    Request(HttpMethod.PUT, body));
   const json = await response.json();
   return new Translation(json);
 }

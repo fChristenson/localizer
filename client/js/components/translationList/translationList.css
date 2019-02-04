@@ -84,10 +84,9 @@
 }
 
 .translation-value__actions {
-  min-width: 300px;
   display: flex;
   justify-content: flex-end;
-  margin-right: var(--margin-md);
+  margin: 0 var(--margin-md);
 }
 
 .translation-value {
@@ -134,6 +133,8 @@
 .translation-value__btn--empty,
 .translation-value__btn {
   border: none;
+  flex: 1 1 auto;
+  text-align: left;
   background: none;
   color: var(--color-blue);
   font-size: var(--font-size-md);
@@ -155,4 +156,23 @@
 
 .translation-value__history-img {
   width: 100%;
+}
+
+.translation-value__edit {
+  font-size: var(--font-size-md);
+  padding: var(--margin-md);
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  border: 1px solid var(--color-gray);
+  flex: 1 1 auto;
+}
+
+.translation-value__edit:focus {
+  border: 1px solid var(--color-blue);
+  box-shadow: 0px 0px 8px var(--color-blue);
+}
+
+.translation-value__form {
+  margin-left: var(--margin-md);
 }

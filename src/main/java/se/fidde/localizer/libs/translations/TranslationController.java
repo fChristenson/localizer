@@ -52,4 +52,17 @@ public class TranslationController {
 			throw new IllegalArgumentException(String.format("%s was not found", translationId));
 		}
 	}
+
+	@PutMapping("/api/v1/translations/{translationId}/text")
+	public Translation updateTranslation(@RequestBody IncomingTranslationTextUpdate incomingTextUpdate,
+			@PathVariable Long translationId) {
+		Optional<Translation> maybeTranslation = translationService.getTranslation(translationId);
+		if (maybeTranslation.isPresent()) {
+			Translation translationToUpdate = maybeTranslation.get();
+			translationToUpdate.updateTranslation(incomingTextUpdate.getText());
+			return translationService.saveTranslation(translationToUpdate);
+		} else {
+			throw new IllegalArgumentException(String.format("%s was not found", translationId));
+		}
+	}
 }
