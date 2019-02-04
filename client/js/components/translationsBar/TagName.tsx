@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface ITagNameProps {
-  tag: string | null;
+  tag: string;
 }
 
 export class TagName extends React.PureComponent<ITagNameProps> {

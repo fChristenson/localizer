@@ -1,11 +1,16 @@
 import * as React from "react";
+import { IContextProps, withAppContext } from "../../app/AppContext";
+import { Translation, TranslationTag } from "../../lib/models/Translation";
 
-interface ITagFilteringDropdownProps {
-  onTagSelect: (selectedTag: string | null) => void;
+interface ITagFilteringDropdownProps extends IContextProps {
   onClose: () => void;
 }
 
-export class TagFilteringDropdown extends React.Component<ITagFilteringDropdownProps> {
+const getTags = (acc: TranslationTag[], item: Translation) => {
+  return acc.concat(item.tags).filter((val, index, self) => self.indexOf(val) === index);
+};
+
+class TagFilteringDropdownComponent extends React.Component<ITagFilteringDropdownProps> {
   constructor(props: ITagFilteringDropdownProps) {
     super(props);
     this.onSelect = this.onSelect.bind(this);
@@ -23,14 +28,20 @@ export class TagFilteringDropdown extends React.Component<ITagFilteringDropdownP
     return (
       <div className="tag-filtering-dropdown">
         <ul className="tag-filtering-dropdown__ul">
-          <li onClick={this.onSelect} className="tag-filtering-dropdown__li">foo</li>
-          <li onClick={this.onSelect} className="tag-filtering-dropdown__li">bar</li>
+          {
+            this.props.context.translations.reduce(getTags, []).map((tag) => {
+              return <li key={tag} onClick={this.onSelect} className="tag-filtering-dropdown__li">{tag}</li>;
+            })
+          }
         </ul>
       </div>
     );
   }
 
   private onSelect(event: React.MouseEvent<HTMLElement>) {
-    this.props.onTagSelect((event.target as HTMLElement).textContent);
+    const value = (event.target as HTMLElement).textContent || "";
+    this.props.context.setSelectedTag(value);
   }
 }
+
+export const TagFilteringDropdown = withAppContext(TagFilteringDropdownComponent);

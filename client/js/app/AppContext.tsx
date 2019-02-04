@@ -1,15 +1,17 @@
 import * as React from "react";
-import { Translation, TranslationId } from "../lib/models/Translation";
+import { Translation, TranslationId, TranslationTag } from "../lib/models/Translation";
 
 export interface IAppContext {
   onCloseKeyEditor: () => void;
   onOpenKeyEditor: () => void;
   onEditTranslation: (translationId: TranslationId) => void;
   setTranslations: (translations: Translation[]) => void;
+  setSelectedTag: (tag: TranslationTag) => void;
   onSearch: (value: string) => void;
   translationToEdit?: Translation;
   showKeyEditor: boolean;
   translations: Translation[];
+  selectedTag: TranslationTag;
   filter: string;
 }
 
@@ -22,6 +24,7 @@ export interface IContextProps {
 interface IAppState {
   showKeyEditor: boolean;
   translations: Translation[];
+  selectedTag: TranslationTag;
   filter: string;
   translationToEdit?: Translation;
 }
@@ -33,11 +36,12 @@ interface IAppContextProviderProps {
 export class AppContextProvider extends React.Component<IAppContextProviderProps, IAppState> {
   constructor(props: IAppContextProviderProps) {
     super(props);
-    this.state = { showKeyEditor: false, translations: [], filter: "" };
+    this.state = { showKeyEditor: false, translations: [], selectedTag: "", filter: "" };
     this.onSearch = this.onSearch.bind(this);
     this.onEditTranslation = this.onEditTranslation.bind(this);
     this.onCloseKeyEditor = this.onCloseKeyEditor.bind(this);
     this.onOpenKeyEditor = this.onOpenKeyEditor.bind(this);
+    this.setSelectedTag = this.setSelectedTag.bind(this);
     this.setTranslations = this.setTranslations.bind(this);
   }
 
@@ -48,6 +52,8 @@ export class AppContextProvider extends React.Component<IAppContextProviderProps
       onEditTranslation: this.onEditTranslation,
       onOpenKeyEditor: this.onOpenKeyEditor,
       onSearch: this.onSearch,
+      selectedTag: this.state.selectedTag,
+      setSelectedTag: this.setSelectedTag,
       setTranslations: this.setTranslations,
       showKeyEditor: this.state.showKeyEditor,
       translationToEdit: this.state.translationToEdit,
@@ -64,6 +70,10 @@ export class AppContextProvider extends React.Component<IAppContextProviderProps
     const translationToEdit = this.state.translations.find((translation) => translation.id === translationId);
     this.setState({ translationToEdit });
     this.setState({ showKeyEditor: true });
+  }
+
+  private setSelectedTag(selectedTag: TranslationTag) {
+    this.setState({ selectedTag });
   }
 
   private onSearch(value: string) {

@@ -7,6 +7,7 @@ class TranslationListComponent extends React.Component<IContextProps> {
   constructor(props: IContextProps) {
     super(props);
     this.filterTranslations = this.filterTranslations.bind(this);
+    this.filterOnTags = this.filterOnTags.bind(this);
   }
 
   public render() {
@@ -15,6 +16,7 @@ class TranslationListComponent extends React.Component<IContextProps> {
         {
           this.props.context.translations
             .filter(this.filterTranslations)
+            .filter(this.filterOnTags)
             .map((translation) => <TranslationRow key={translation.id} translation={translation} />)
         }
       </ul>
@@ -27,6 +29,13 @@ class TranslationListComponent extends React.Component<IContextProps> {
     }
     const regexp = new RegExp(this.props.context.filter);
     return translation.translations.some((translationText) => regexp.test(translationText.text));
+  }
+
+  private filterOnTags(translation: Translation): boolean {
+    if (!this.props.context.selectedTag) {
+      return true;
+    }
+    return translation.tags.some((tag) => tag === this.props.context.selectedTag);
   }
 }
 
