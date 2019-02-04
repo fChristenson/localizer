@@ -1,9 +1,10 @@
 import * as React from "react";
-import { updateTranslationText } from "../../lib/api/translationApi";
+import { IContextProps, withAppContext } from "../../app/AppContext";
+import { getAllTranslations, updateTranslationText } from "../../lib/api/translationApi";
 import { TranslationId } from "../../lib/models/Translation";
 import { TranslationText } from "../../lib/models/TranslationText";
 
-interface ITranslationValueProps {
+interface ITranslationValueProps extends IContextProps {
   translationId: TranslationId;
   translationText: TranslationText;
 }
@@ -13,7 +14,7 @@ interface ITranslationValueState {
   value: string;
 }
 
-export class TranslationValue extends React.Component<ITranslationValueProps, ITranslationValueState> {
+class TranslationValueComponent extends React.Component<ITranslationValueProps, ITranslationValueState> {
   constructor(props: ITranslationValueProps) {
     super(props);
     this.state = { edit: false, value: props.translationText.text || "" };
@@ -23,7 +24,7 @@ export class TranslationValue extends React.Component<ITranslationValueProps, IT
   }
 
   public render() {
-    const btnClassName = this.props.translationText.text ? "translation-value__btn" : "translation-value__btn--empty";
+    const btnClassName = this.state.value ? "translation-value__btn" : "translation-value__btn--empty";
     return (
       <>
         {
@@ -59,10 +60,16 @@ export class TranslationValue extends React.Component<ITranslationValueProps, IT
     event.stopPropagation();
     this.setState({ edit: false });
     const { translationId, translationText } = this.props;
+
     if (translationText.text !== this.state.value) {
-      translationText.text = this.state.value;
-      await updateTranslationText(translationId, translationText);
+      const clone = translationText.clone();
+      clone.text = this.state.value;
+      await updateTranslationText(translationId, clone);
+      const translations = await getAllTranslations();
+      this.props.context.setTranslations(translations);
     }
     return false;
   }
 }
+
+export const TranslationValue = withAppContext(TranslationValueComponent);

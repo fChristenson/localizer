@@ -20,6 +20,10 @@ export class TranslationText {
     this.language = this.getLanguage(maybeLanguage);
   }
 
+  public clone(): TranslationText {
+    return new TranslationText(this);
+  }
+
   private getLanguage(language: string): Language {
     switch (language) {
       case "SWEDISH":
@@ -29,6 +33,8 @@ export class TranslationText {
         return Language.ENGLISH;
 
       default:
+        /* tslint:disable */
+        console.error(`${language} is not a valid language`);
         return Language.UNKNOWN;
     }
   }

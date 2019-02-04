@@ -24,6 +24,14 @@
   box-shadow: 0px 0px 8px var(--color-blue);
 }
 
-.project-bar__langauge {
+.project-bar__language {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-left: var(--margin-xsm);
+}
+
+.project-bar__count {
+  color: var(--color-dark-gray);
+  margin-left: var(--margin-xsm);
 }
