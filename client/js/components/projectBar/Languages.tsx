@@ -1,11 +1,14 @@
 import * as React from "react";
 import { IContextProps, withAppContext } from "../../app/AppContext";
 import { Translation } from "../../lib/models/Translation";
-import { Language } from "../../lib/models/TranslationText";
+import { hasText, Language, sortByCreatedAt, uniqTranslationTexts } from "../../lib/models/TranslationText";
 
 const getNumberOfTranslations = (language: Language) => (acc: number, item: Translation) => {
   return acc + item.translations
-    .filter((val) => val.language === language && val.text).length;
+    .filter((val) => val.language === language)
+    .sort(sortByCreatedAt)
+    .filter(uniqTranslationTexts)
+    .filter(hasText).length;
 };
 const getNumberOfEnglishTranslations = getNumberOfTranslations(Language.ENGLISH);
 const getNumberOfSwedishTranslations = getNumberOfTranslations(Language.SWEDISH);

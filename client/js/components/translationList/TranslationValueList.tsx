@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TranslationId } from "../../lib/models/Translation";
-import { Language, TranslationText } from "../../lib/models/TranslationText";
+import { Language, sortByCreatedAt, TranslationText, uniqTranslationTexts } from "../../lib/models/TranslationText";
 import { TranslationValueRow } from "./TranslationValueRow";
 
 interface ITranslationValueListProps {
@@ -8,7 +8,7 @@ interface ITranslationValueListProps {
   translationTexts: TranslationText[];
 }
 
-function sort(a: TranslationText, b: TranslationText): number {
+function sortByLanguage(a: TranslationText, b: TranslationText): number {
   if (a.language === Language.ENGLISH && b.language !== Language.ENGLISH) {
     return -1;
   } else if (a.language !== Language.ENGLISH && b.language === Language.ENGLISH) {
@@ -25,7 +25,9 @@ export class TranslationValueList extends React.PureComponent<ITranslationValueL
         <ul className="translation-value__values">
           {
             this.props.translationTexts
-              .sort(sort)
+              .sort(sortByCreatedAt)
+              .filter(uniqTranslationTexts)
+              .sort(sortByLanguage)
               .map((text) => <TranslationValueRow
                 key={text.id}
                 translationId={this.props.translationId}

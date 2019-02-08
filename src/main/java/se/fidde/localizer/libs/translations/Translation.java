@@ -2,7 +2,6 @@ package se.fidde.localizer.libs.translations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -83,13 +82,8 @@ public class Translation {
 		}
 	}
 
-	public void updateTranslation(TranslatedText text) {
-		Optional<TranslatedText> maybeText = this.translations.stream().filter((t) -> t.getId() == text.getId())
-				.findFirst();
-		if (maybeText.isPresent() == false) {
-			throw new IllegalArgumentException(String.format("%s could not be found", text.getId()));
-		}
-		maybeText.get().setText(text.getText());
+	public void addTranslation(TranslatedText text) {
+		this.translations.add(text);
 	}
 
 	private void createTranslations(String translation) {

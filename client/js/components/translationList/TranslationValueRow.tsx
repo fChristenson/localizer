@@ -1,15 +1,21 @@
 import * as React from "react";
+import { IContextProps, withAppContext } from "../../app/AppContext";
 import { TranslationId } from "../../lib/models/Translation";
 import { Language, TranslationText } from "../../lib/models/TranslationText";
 import { TranslationValue } from "./TranslationValue";
 
-interface ITranslationValueRow {
+interface ITranslationValueRowProps extends IContextProps {
   translationId: TranslationId;
   translationText: TranslationText;
   language: Language;
 }
 
-export class TranslationValueRow extends React.PureComponent<ITranslationValueRow> {
+class TranslationValueRowComponent extends React.Component<ITranslationValueRowProps> {
+  constructor(props: ITranslationValueRowProps) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+
   public render() {
     return (
       <li className="translation-value__row">
@@ -18,7 +24,7 @@ export class TranslationValueRow extends React.PureComponent<ITranslationValueRo
           <TranslationValue translationId={this.props.translationId} translationText={this.props.translationText} />
           <ul className="translation-value__actions">
             <li>
-              <button className="translation-value__history-btn">
+              <button onClick={this.onClick} className="translation-value__history-btn">
                 <img className="translation-value__history-img" src="/images/history.svg" />
               </button>
             </li>
@@ -27,4 +33,10 @@ export class TranslationValueRow extends React.PureComponent<ITranslationValueRo
       </li>
     );
   }
+
+  private onClick() {
+    this.props.context.onOpenTranslationHistory(this.props.translationId, this.props.language);
+  }
 }
+
+export const TranslationValueRow = withAppContext(TranslationValueRowComponent);

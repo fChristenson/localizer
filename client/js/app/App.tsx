@@ -2,6 +2,7 @@ import * as React from "react";
 import { Header } from "../components/header/Header";
 import { KeyEditor } from "../components/keyEditor/KeyEditor";
 import { ProjectBar } from "../components/projectBar/ProjectBar";
+import { TranslationHistory } from "../components/translationHistory/TranslationHistory";
 import { TranslationList } from "../components/translationList/TranslationList";
 import { TranslationsBar } from "../components/translationsBar/TranslationsBar";
 import { getAllTranslations } from "../lib/api/translationApi";
@@ -21,6 +22,7 @@ class AppComponent extends React.Component<IContextProps> {
                 <TranslationsBar numberOfKeys={this.props.context.translations.length} />
                 <TranslationList />
                 <KeyEditor />
+                <TranslationHistory />
             </div>
         );
     }

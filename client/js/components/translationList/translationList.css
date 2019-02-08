@@ -132,13 +132,14 @@
 
 .translation-value__btn--empty,
 .translation-value__btn {
+  max-width: 400px;
   border: none;
   flex: 1 1 auto;
   text-align: left;
   background: none;
   color: var(--color-blue);
   font-size: var(--font-size-md);
-  margin-left: var(--margin-l);
+  margin: var(--margin-md) 0 var(--margin-md) var(--margin-l);
   cursor: pointer;
 }
 

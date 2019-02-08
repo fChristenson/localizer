@@ -46,7 +46,9 @@ public class TranslationController {
 			translationToUpdate.setDescription(incomingTranslation.getDescription());
 			translationToUpdate.setTranslationKey(incomingTranslation.getKey());
 			translationToUpdate.updateTags(incomingTranslation.getTags());
-			translationToUpdate.updateTranslation(incomingTranslation.getTranslation());
+			TranslatedText text = incomingTranslation.getTranslation();
+			TranslatedText update = new TranslatedText(text.getText(), text.getLanguage());
+			translationToUpdate.addTranslation(update);
 			return translationService.saveTranslation(translationToUpdate);
 		} else {
 			throw new IllegalArgumentException(String.format("%s was not found", translationId));
@@ -59,7 +61,9 @@ public class TranslationController {
 		Optional<Translation> maybeTranslation = translationService.getTranslation(translationId);
 		if (maybeTranslation.isPresent()) {
 			Translation translationToUpdate = maybeTranslation.get();
-			translationToUpdate.updateTranslation(incomingTextUpdate.getText());
+			TranslatedText text = incomingTextUpdate.getText();
+			TranslatedText update = new TranslatedText(text.getText(), text.getLanguage());
+			translationToUpdate.addTranslation(update);
 			return translationService.saveTranslation(translationToUpdate);
 		} else {
 			throw new IllegalArgumentException(String.format("%s was not found", translationId));

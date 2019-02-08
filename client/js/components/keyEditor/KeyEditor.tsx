@@ -2,7 +2,7 @@ import * as React from "react";
 import { IContextProps, withAppContext } from "../../app/AppContext";
 import { getAllTranslations, saveTranslation, updateTranslation } from "../../lib/api/translationApi";
 import { Language } from "../../lib/models/TranslationText";
-import { BadgeButton } from "../badgeButton/BadgeButton";
+import { Dialog, DialogFooter, DialogHeader } from "../dialog";
 import { IKeyEditorForm } from "./IKeyEditorForm";
 import { KeyEditorFormFields } from "./KeyEditorFormFields";
 
@@ -11,7 +11,7 @@ interface IKeyEditorComponentState {
 }
 
 const initForm = { key: "", translation: "", description: "", tags: [] };
-export class KeyEditorComponent extends React.Component<IContextProps, IKeyEditorComponentState> {
+class KeyEditorComponent extends React.Component<IContextProps, IKeyEditorComponentState> {
   constructor(props: IContextProps) {
     super(props);
     const state = { form: initForm };
@@ -41,26 +41,14 @@ export class KeyEditorComponent extends React.Component<IContextProps, IKeyEdito
   }
 
   public render() {
-    if (this.props.context.showKeyEditor === false) {
-      return null;
-    }
-
     return (
-      <div className="key-editor">
-        <div className="key-editor__click-catcher" onClick={this.onClose}></div>
-        <form noValidate className="key-editor__dialog" onSubmit={this.onSubmit}>
-          <header className="key-editor__header">
-            <h2 className="key-editor__title">Key editor</h2>
-            <button onClick={this.onClose} className="key-editor__close" tabIndex={1}>×</button>
-          </header>
-          <div className="key-editor__content">
-            <KeyEditorFormFields form={this.state.form} onChange={this.onChange} />
-          </div>
-          <footer className="key-editor__footer">
-            <BadgeButton tabIndex={6}>Save</BadgeButton>
-          </footer>
+      <Dialog show={this.props.context.showKeyEditor} onClose={this.onClose}>
+        <form noValidate onSubmit={this.onSubmit}>
+          <DialogHeader onClose={this.onClose} title="Key editor" />
+          <KeyEditorFormFields form={this.state.form} onChange={this.onChange} />
+          <DialogFooter tabIndex={6} submitButtonText="Save" />
         </form>
-      </div>
+      </Dialog>
     );
   }
 

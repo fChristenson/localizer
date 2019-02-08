@@ -29,8 +29,8 @@ class TagFilteringDropdownComponent extends React.Component<ITagFilteringDropdow
       <div className="tag-filtering-dropdown">
         <ul className="tag-filtering-dropdown__ul">
           {
-            this.props.context.translations.reduce(getTags, []).map((tag) => {
-              return <li key={tag} onClick={this.onSelect} className="tag-filtering-dropdown__li">{tag}</li>;
+            this.props.context.translations.reduce(getTags, []).map((tag, i) => {
+              return <li key={i} onClick={this.onSelect} className="tag-filtering-dropdown__li">{tag}</li>;
             })
           }
         </ul>

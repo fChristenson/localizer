@@ -1,0 +1,37 @@
+.translation-history__values {
+  list-style: none;
+}
+
+.translation-history__value { 
+  width: 100%;
+  background: var(--color-xlight-gray);
+  border-bottom: 1px solid var(--color-gray);
+  padding: var(--margin-md) var(--margin-xl);
+}
+
+.translation-history__value:nth-child(even) {
+  background: white;
+}
+
+.translation-history__value:last-child {
+  border-bottom: none;
+}
+
+.translation-history__text {
+  margin: var(--margin-xl) 0;
+}
+
+.translation-history__text,
+.translation-history__date {
+  color: var(--color-dark-gray);
+}
+
+.translation-history__date {
+  font-size: var(--font-size-sm);
+}
+
+.translation-history__date-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

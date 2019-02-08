@@ -17,7 +17,7 @@ export class KeyEditorFormFields extends React.Component<IKeyEditorFormFieldsPro
 
   public render() {
     return (
-      <>
+      <div>
         <KeyEditorFormRow htmlFor="key" label="Key">
           <input
             autoFocus
@@ -53,7 +53,7 @@ export class KeyEditorFormFields extends React.Component<IKeyEditorFormFieldsPro
         <KeyEditorFormRow htmlFor="tags" label="Tags">
           <TagField onChange={this.props.onChange} tags={this.props.form.tags} />
         </KeyEditorFormRow>
-      </>
+      </div>
     );
   }
 

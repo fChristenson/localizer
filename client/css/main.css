@@ -4,5 +4,7 @@
 @import "../js/components/projectBar/projectBar.css";
 @import "../js/components/translationsBar/translationsBar.css";
 @import "../js/components/badgeButton/badgeButton.css";
-@import "../js/components/translationList//translationList.css";
-@import "../js/components/keyEditor//keyEditor.css";
+@import "../js/components/translationList/translationList.css";
+@import "../js/components/keyEditor/keyEditor.css";
+@import "../js/components/dialog/dialog.css";
+@import "../js/components/translationHistory/translationHistory.css";

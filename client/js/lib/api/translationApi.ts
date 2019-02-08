@@ -1,5 +1,5 @@
 import { Translation, TranslationId } from "../models/Translation";
-import { TranslationText, TranslationTextId } from "../models/TranslationText";
+import { TranslationText } from "../models/TranslationText";
 import { validateValueType } from "./ApiUtils";
 import { HttpMethod, Request } from "./Request";
 
