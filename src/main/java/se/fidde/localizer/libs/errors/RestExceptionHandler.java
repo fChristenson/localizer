@@ -1,4 +1,4 @@
-package se.fidde.localizer.libs.translations;
+package se.fidde.localizer.libs.errors;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

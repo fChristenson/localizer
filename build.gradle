@@ -26,8 +26,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-devtools")
+	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.4.RELEASE'
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.1.Final'
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.14'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.2.RELEASE'

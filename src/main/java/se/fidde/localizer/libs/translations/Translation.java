@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import se.fidde.localizer.libs.common.Utils;
+
 @Entity
 @Table(name = "translations")
 public class Translation {
@@ -31,7 +33,6 @@ public class Translation {
 	}
 
 	public Translation(IncomingTranslation incoming) throws IllegalArgumentException {
-		this.id = -1L;
 		this.setTranslationKey(incoming.getKey());
 		this.createTranslations(incoming.getTranslation());
 		this.setDescription(incoming.getDescription());
@@ -59,20 +60,19 @@ public class Translation {
 	}
 
 	public void setTranslationKey(String translationKey) {
-		TranslationUtils.validateString("key", translationKey);
-		this.translationKey = translationKey;
+		this.translationKey = Utils.validateString("key", translationKey);
 	}
 
 	public void setTranslations(List<TranslatedText> translations) {
-		this.translations = translations;
+		this.translations = Utils.notNull("translations", translations);
 	}
 
 	public void setDescription(String description) {
-		this.description = TranslationUtils.validateString("description", description);
+		this.description = Utils.validateString("description", description);
 	}
 
 	public void setTags(List<TranslationTag> tags) {
-		this.tags = tags;
+		this.tags = Utils.notNull("tags", tags);
 	}
 
 	public void updateTags(List<String> tags) {
@@ -88,7 +88,7 @@ public class Translation {
 
 	private void createTranslations(String translation) {
 		List<TranslatedText> translations = new ArrayList<TranslatedText>();
-		TranslationUtils.validateString("translation", translation);
+		Utils.validateString("translation", translation);
 		translations.add(new TranslatedText(translation, Language.ENGLISH));
 		translations.add(new TranslatedText("", Language.SWEDISH));
 		this.translations = translations;

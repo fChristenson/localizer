@@ -12,6 +12,9 @@ export class Header extends React.PureComponent<IHeaderProps> {
           <li className="header__username">
             {"Logged in as: "}{this.props.username}
           </li>
+          <li>
+            <a href="/logout">Logout</a>
+          </li>
         </ul>
       </header>
     );

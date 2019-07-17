@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import se.fidde.localizer.libs.common.Utils;
+
 @Entity
 public class TranslatedText {
 	@Id
@@ -15,15 +17,15 @@ public class TranslatedText {
 	@Column(length = 1000)
 	private String text;
 	private Language language;
+
 	private Date createdAt;
 
 	public TranslatedText() {
 	}
 
 	public TranslatedText(String text, Language language) throws IllegalArgumentException {
-		this.id = -1L;
-		this.text = TranslationUtils.notNull("translated text", text);
-		this.language = TranslationUtils.notNull("language", language);
+		this.setText(text);
+		this.setLanguage(language);
 		this.setCreatedAt(new Date());
 	}
 
@@ -39,8 +41,12 @@ public class TranslatedText {
 		return language;
 	}
 
+	public void setLanguage(Language language) {
+		this.language = Utils.notNull("language", language);
+	}
+
 	public void setText(String text) {
-		this.text = TranslationUtils.notNull("translated text", text);
+		this.text = Utils.notNull("translated text", text);
 	}
 
 	public Date getCreatedAt() {
@@ -48,6 +54,6 @@ public class TranslatedText {
 	}
 
 	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+		this.createdAt = Utils.notNull("createdAt", createdAt);
 	}
 }

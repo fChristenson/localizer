@@ -1,4 +1,4 @@
-package se.fidde.localizer.libs.translations;
+package se.fidde.localizer.libs.errors;
 
 public class ErrorResponse {
 	private final String message;

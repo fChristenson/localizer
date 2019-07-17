@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import se.fidde.localizer.libs.common.Utils;
+
 @Entity
 public class TranslationTag {
 	@Id
@@ -16,8 +18,11 @@ public class TranslationTag {
 	}
 
 	public TranslationTag(String text) throws IllegalArgumentException {
-		this.id = -1L;
-		this.text = TranslationUtils.validateString("tag", text);
+		this.setText(text);
+	}
+
+	public void setText(String text) {
+		this.text = Utils.validateString("tag", text);
 	}
 
 	public Long getId() {
